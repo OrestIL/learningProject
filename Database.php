@@ -8,7 +8,6 @@ class Database
     public $password = "";
 
     function setConnection() {
-        $db = new Database();
         $conn = new mysqli($this->serverName, $this->username, $this->password, $this->dataBaseName);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
@@ -17,8 +16,7 @@ class Database
     }
 
     function insertNewUser($email, $password) {
-        $db = new Database();
-        $conn = $db->setConnection();
+        $conn = $this->setConnection();
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $sql = "INSERT INTO users (email, password) VALUES ('$email', '$hashedPassword');";
         if ($conn->multi_query($sql) === TRUE) return true;
@@ -26,8 +24,7 @@ class Database
     }
 
     function loginUser($email, $pass) {
-            $db = new Database();
-            $conn = $db->setConnection();
+            $conn = $this->setConnection();
             $sql = "SELECT email, password FROM users WHERE email = '$email'";
             $result = $conn->query($sql);
             if ($result->num_rows > 0){
