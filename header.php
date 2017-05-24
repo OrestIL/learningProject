@@ -8,6 +8,6 @@
             echo "You're logged as " . $_COOKIE['user'];
             echo "&nbsp &nbsp &nbsp";
             echo "<a href=\"logout.php\">Log out</a>";
-            }
+        }
     ?>
 </header>

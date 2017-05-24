@@ -16,14 +16,18 @@ class Database
         return $conn;
     }
 
-    function insertNewUser($email, $password, $conn) {
+    function insertNewUser($email, $password) {
+        $db = new Database();
+        $conn = $db->setConnection();
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $sql = "INSERT INTO users (email, password) VALUES ('$email', '$hashedPassword');";
         if ($conn->multi_query($sql) === TRUE) return true;
         else return false;
     }
 
-    function loginUser($email, $pass, $conn) {
+    function loginUser($email, $pass) {
+            $db = new Database();
+            $conn = $db->setConnection();
             $sql = "SELECT email, password FROM users WHERE email = '$email'";
             $result = $conn->query($sql);
             if ($result->num_rows > 0){
