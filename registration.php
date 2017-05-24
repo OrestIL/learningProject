@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if ($result === true) {
         $user->saveUserData();
         $linkForRedirect = "login.php";
-        header("Location: ". $linkForRedirect);
+        header("Location: " . $linkForRedirect);
         exit();
     } else {
         $linkForRedirect = "registration.php";

@@ -6,14 +6,14 @@ class Database
     private $dataBaseName = "learningProject";
     private $username = "root";
     private $password = "";
-    public $conn = false;
+    public $conn;
 
     public function __construct()
     {
         $this->conn = $this->setConnection();
     }
 
-    function setConnection()
+    private function setConnection()
     {
         $conn = new mysqli($this->serverName, $this->username, $this->password, $this->dataBaseName);
         if ($conn->connect_error) {

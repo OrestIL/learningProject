@@ -10,25 +10,24 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <input type=\"password\" name=\"pass\" placeholder=\"Enter your password\" required>
             <input type=\"submit\" name=\"submit\" value=\"Summit\">
         </form> ";
-} elseif ($_SERVER["REQUEST_METHOD"] == "POST"){
+} elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        include ("User.php");
+    include("User.php");
+    $linkForRedirect = "login.php";
+    $user = new User();
+    $user->email = $_POST["email"];
+    $user->pass = $_POST["pass"];
+    $result = $user->login($_POST["email"], $_POST["pass"]);
+    if ($result === true) {
+        setcookie('user', $_POST["email"], time() + 60 * 60 * 24 * 365);
+        $linkForRedirect = "index.php";
+        header("Location: " . $linkForRedirect);
+        exit();
+    } else {
         $linkForRedirect = "login.php";
-        $user = new User();
-        $user->email = $_POST["email"];
-        $user->pass = $_POST["pass"];
-        $result = $user->login($_POST["email"], $_POST["pass"]);
-        if ($result === true) {
-            setcookie('user' ,$_POST["email"], time() + 60*60*24*365);
-            $linkForRedirect = "index.php";
-            header("Location: ". $linkForRedirect);
-            exit();
-        }
-        else {
-            $linkForRedirect = "login.php";
-            header("Location:" . $linkForRedirect);
-            exit();
-        }
+        header("Location:" . $linkForRedirect);
+        exit();
+    }
 } else {
     header("Location:" . $linkForRedirect);
     exit();
